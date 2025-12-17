@@ -33,3 +33,9 @@ write.csv (Data_frame, "world_clim_data_frame.csv")
 
 #? Si los valoes salen NA es porque las imágenes no coinciden con la ubicación
 #? de las coordenadas
+
+
+#* Método 2: Probar cuando el servidor de geodata esté funcionando:
+
+climate <- worldclim_country(var = "bio",  res = 0.5, country = "Peru")
+#! The geodata server is temporary out of service for maintenance. It should be back on 20 December.

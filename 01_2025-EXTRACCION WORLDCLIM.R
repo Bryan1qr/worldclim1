@@ -7,10 +7,7 @@ rm(list=ls()) #limpa o ambiente de trabalho
 
 library(tidyverse)
 library(raster)
-library(sp)
-#library(rgdal)
-library(readr)
-
+library(terra)
 
 xy <-read.csv("D:/GRTACNA/2025/DEPOSITO_BOT/FROM_BRYAN/Worldclim_actual/xy_anual_carzo2024.csv", sep = ";")
 
@@ -19,11 +16,10 @@ xy <- xy[,c(2,3)]
 names(xy) <- c('x','y')
 
 #FORMA A1:
-library(geodata)
-library(tidyr)
-library(terra)
 
-climate <- getData('worldclim', var='bio', res=0.5, lon=xy$x, lat=xy$y)
+climate <- getData('worldclim', var='bio', res=10, lon=xy$x, lat=xy$y)
+climate <- worldclim_tile(var = "bio", lon = max(xy$x), lat = max(xy$y), path = "XD", res = 10)
+#! The geodata server is temporary out of service for maintenance. It should be back on 20 December.
 
 Data_frame <- cbind(raster::extract(climate, xy, df = T),xy)
 str(Data_frame)
