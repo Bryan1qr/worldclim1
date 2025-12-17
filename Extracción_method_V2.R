@@ -10,6 +10,7 @@ xy <- read.csv("xy_anual_carzo2024.csv", sep = ";")
 rownames(xy) <- xy$CODE
 xy <- xy[,c(2,3)]
 names(xy) <- c('x','y')
+head(xy)
 
 #* Seleccionamos las imágenes y las ponemos en stack:
 data1 <- list.files(
@@ -39,3 +40,11 @@ write.csv (Data_frame, "world_clim_data_frame.csv")
 
 climate <- worldclim_country(var = "bio",  res = 0.5, country = "Peru")
 #! The geodata server is temporary out of service for maintenance. It should be back on 20 December.
+Data_frame <- cbind(
+  raster::extract(
+    climate, xy, df = T),xy
+  )
+
+str(Data_frame)
+#* Guardamos
+write.csv (Data_frame, "world_clim_data_frame.csv")
